@@ -86,3 +86,25 @@ exports.findPatient = async (req, res) => {
   if (!patient) return res.status(404).json({ message: 'Patient not found' });
   res.json(patient);
 };
+
+exports.deleteOrder = async (req, res) => {
+  try {
+    if (!['ADMIN', 'SUPER_ADMIN'].includes(req.user.role)) {
+      return res
+        .status(403)
+        .json({ message: 'Only admin can delete orders' });
+    }
+
+    const order = await TestOrder.findByIdAndDelete(req.params.id);
+
+    if (!order) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+
+    await logAction(req, 'DELETE', 'TestOrder', order._id, order.orderNo);
+
+    res.json({ message: 'Deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
