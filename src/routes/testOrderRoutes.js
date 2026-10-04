@@ -1,0 +1,10 @@
+const router = require('express').Router();
+const ctrl = require('../controllers/testOrderController');
+const { protect } = require('../middleware/auth');
+router.use(protect);
+router.post('/', ctrl.createOrder);
+router.get('/', ctrl.getOrders);
+router.get('/find-patient/:patientId', ctrl.findPatient);
+router.get('/:id', ctrl.getOrder);
+router.put('/:id/payment', ctrl.updatePayment);
+module.exports = router;

@@ -1,0 +1,11 @@
+const router = require('express').Router();
+const ctrl = require('../controllers/patientController');
+const { protect } = require('../middleware/auth');
+router.use(protect);
+router.get('/due-list', ctrl.getDueList);
+router.post('/', ctrl.createPatient);
+router.get('/', ctrl.getPatients);
+router.get('/:id', ctrl.getPatient);
+router.put('/:id', ctrl.updatePatient);
+router.delete('/:id', ctrl.deletePatient);
+module.exports = router;

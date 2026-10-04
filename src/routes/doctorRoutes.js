@@ -1,0 +1,10 @@
+const router = require('express').Router();
+const ctrl = require('../controllers/doctorController');
+const { protect } = require('../middleware/auth');
+router.use(protect);
+router.post('/', ctrl.createDoctor);
+router.get('/', ctrl.getDoctors);
+router.put('/:id', ctrl.updateDoctor);
+router.put('/:id/toggle-active', ctrl.toggleActive);
+router.delete('/:id', ctrl.deleteDoctor);
+module.exports = router;

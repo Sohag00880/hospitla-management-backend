@@ -1,0 +1,14 @@
+const router = require('express').Router();
+const ctrl = require('../controllers/testController');
+const { protect } = require('../middleware/auth');
+router.use(protect);
+router.post('/categories', ctrl.createCategory);
+router.get('/categories', ctrl.getCategories);
+router.put('/categories/:id', ctrl.updateCategory);
+router.delete('/categories/:id', ctrl.deleteCategory);
+router.post('/', ctrl.createTest);
+router.get('/', ctrl.getTests);
+router.get('/:id', ctrl.getTest);
+router.put('/:id', ctrl.updateTest);
+router.delete('/:id', ctrl.deleteTest);
+module.exports = router;

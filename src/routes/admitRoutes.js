@@ -1,0 +1,16 @@
+const router = require('express').Router();
+const ctrl = require('../controllers/admitController');
+const { protect, requireRole } = require('../middleware/auth');
+router.use(protect);
+router.post('/categories', ctrl.createCategory);
+router.get('/categories', ctrl.getCategories);
+router.put('/categories/:id', ctrl.updateCategory);
+router.delete('/categories/:id', ctrl.deleteCategory);
+router.post('/', ctrl.admitPatient);
+router.get('/', ctrl.getAdmits);
+router.get('/:id', ctrl.getAdmit);
+router.put('/:id', ctrl.updateAdmit);
+router.put('/:id/discharge', ctrl.discharge);
+router.delete('/:id', ctrl.deleteAdmit);
+router.get('/:id/pdf', requireRole('ADMIN', 'SUPER_ADMIN'), ctrl.admitPDF);
+module.exports = router;

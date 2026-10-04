@@ -1,0 +1,15 @@
+const router = require('express').Router();
+const ctrl = require('../controllers/resultController');
+const { protect, requireRole } = require('../middleware/auth');
+router.use(protect);
+router.get('/orders', ctrl.getOrdersForResult);
+router.get('/permission-requests', requireRole('SUPER_ADMIN', 'ADMIN'), ctrl.getPermissionRequests);
+router.post('/', ctrl.saveResult);
+router.get('/', ctrl.getResults);
+router.get('/:id', ctrl.getResult);
+router.put('/:id/permit', requireRole('SUPER_ADMIN', 'ADMIN'), ctrl.permitReport);
+router.put('/:id/confirm', requireRole('SUPER_ADMIN', 'ADMIN'), ctrl.confirmReport);
+router.put('/:id/change-status', requireRole('SUPER_ADMIN', 'ADMIN'), ctrl.changeStatus);
+router.put('/:id/release', ctrl.releaseReport);
+router.put('/:id/reject', ctrl.rejectResult);
+module.exports = router;
